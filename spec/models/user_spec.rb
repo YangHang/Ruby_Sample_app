@@ -100,6 +100,5 @@ describe "with invalid password" do
       it { should_not == user_for_invalid_password }
       specify { user_for_invalid_password.should be_false }
 end
-
 end
-
+end
