@@ -2,6 +2,7 @@ SampleApp::Application.routes.draw do
 
 
   get "users/new"
+  resources :users
 
 
 

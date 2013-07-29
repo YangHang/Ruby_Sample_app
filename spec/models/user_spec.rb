@@ -102,4 +102,3 @@ describe "with invalid password" do
 end
 
 end
-
