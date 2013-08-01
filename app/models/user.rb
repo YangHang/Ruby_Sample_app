@@ -8,11 +8,13 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  password_digest :string(255)
+#  remeber_token   :string(255)
 #
 
 class User < ActiveRecord::Base
   
   has_secure_password
+  before_save :create_remeber_token
   before_save {self.email = email.downcase}
   attr_accessible :email, :name,:password, :password_confirmation
   
@@ -22,4 +24,9 @@ class User < ActiveRecord::Base
   validates :password,length:{minimum:6}
 
   has_secure_password
+ 
+  private
+  def create_remeber_token
+    self.remeber_token = SecureRandom.urlsafe_base64
+  end
 end
