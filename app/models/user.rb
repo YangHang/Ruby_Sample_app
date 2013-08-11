@@ -9,6 +9,7 @@
 #  updated_at      :datetime         not null
 #  password_digest :string(255)
 #  remeber_token   :string(255)
+#  admin           :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base
@@ -16,7 +17,7 @@ class User < ActiveRecord::Base
   has_secure_password
   before_save :create_remeber_token
   before_save {self.email = email.downcase}
-  attr_accessible :email, :name,:password, :password_confirmation
+  attr_accessible :email, :name,:password, :password_confirmation, :admin
   
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\Z/i
   validates :name,:presence => true,:length => {:maximum => 50 }
@@ -24,7 +25,9 @@ class User < ActiveRecord::Base
   validates :password,length:{minimum:6}
 
   has_secure_password
- 
+  def admin?
+    self.admin
+  end
   private
   def create_remeber_token
     self.remeber_token = SecureRandom.urlsafe_base64
